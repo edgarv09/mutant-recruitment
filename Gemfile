@@ -34,10 +34,19 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem "pry"
-  gem 'rubocop-rspec', require: false
   gem 'pry-byebug'
   # Helps generate seed data
   gem "factory_bot_rails"
+
+  # Security tools
+  gem 'brakeman'
+  gem 'bundler-audit'
+  gem 'ruby_audit'
+
+  # Linting
+  gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec', require: false
 end
 
 group :test do
