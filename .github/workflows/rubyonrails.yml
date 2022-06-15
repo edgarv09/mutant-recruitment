@@ -53,8 +53,8 @@ jobs:
         env:
           RAILS_ENV: test
           PGHOST: localhost
-          POSTGRES_DB: rails_github_actions_test
-          POSTGRES_USER: rails_github_actions
+          POSTGRES_DB: mutant_recruitment_test
+          POSTGRES_USER: mutant_actions
           POSTGRES_PASSWORD: postgres
         run: |
           cp config/database.ci.yml config/database.yml
