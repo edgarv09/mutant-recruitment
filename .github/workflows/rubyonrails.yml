@@ -24,12 +24,12 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mutant_recruitment_test
+          POSTGRES_USER: mutant_actions
+          POSTGRES_PASSWORD: postgres
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      DATABASE_URL: "postgres://mutant_actions:postgres@localhost:5432/mutant_recruitment_test"
     steps:    
       - name: Checkout code
         uses: actions/checkout@v3
@@ -63,10 +63,10 @@ jobs:
       # Add or replace test runners here
       - name: Build and test with rspec
         env:
-          PG_DATABASE: postgres
-          PG_HOST: localhost
-          PG_USER: postgres
-          PG_PASSWORD: password
+          PGHOST: localhost
+          POSTGRES_DB: mutant_recruitment_test
+          POSTGRES_USER: mutant_actions
+          POSTGRES_PASSWORD: postgres
           RAILS_ENV: test
           PGPORT: ${{ job.services.postgres.ports[5432] }}
         run: |
