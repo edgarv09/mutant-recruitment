@@ -10,6 +10,7 @@ module ApplicationHelper
   def valid_size?(dna)
     column_size = dna.size
     total_string_size = dna.join.size
-    (total_string_size / column_size.to_f).floor ==  column_size.to_f
+    delta = (total_string_size / column_size.to_f) - column_size
+    delta.zero?
   end
 end
