@@ -16,8 +16,13 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
     end
 
     describe 'analyze bad request' do
-      it 'sent a rectangular array' do
+      it 'return forbidden in case of rectangular array' do
         post "/mutant", :params => { :dna => ["ATG","CAG"] }
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'return forbidden in case of invalid_dna' do
+        post "/mutant", :params => { :dna => ["ATG","CAGV"] }
         expect(response).to have_http_status(:forbidden)
       end
     end

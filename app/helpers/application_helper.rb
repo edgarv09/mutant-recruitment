@@ -13,4 +13,8 @@ module ApplicationHelper
     delta = (total_string_size / column_size.to_f) - column_size
     delta.zero?
   end
+
+  def payload_to_array(payload)
+    Array.new(payload.size) { |index| payload[index].chars } # rows
+  end
 end
