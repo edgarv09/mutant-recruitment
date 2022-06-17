@@ -23,23 +23,13 @@ module Dna
     end
 
     def create_matrix
-      p @col_size
-      p @row_size
-      p forward_diagonal
-      p backward_diagonal
       (0...row_size).each do |row_index|
-        #p "col index: #{col_index}"
         (0...col_size).each do |col_index|
-          #p "row index: #{row_index} "
-          print "#{@array[row_index][col_index]} "
-          # print "#{@array[col_index][row_index]} "
-          #
           @columns[col_index].append(@array[row_index][col_index])
           @forward_diagonal[col_index + row_index].append(@array[row_index][col_index])
           @backward_diagonal[col_index - row_index - delta_backward_diagonal].append(@array[row_index][col_index])
         end
-        print "\n"
-      end;nil
+      end
     end
   end
 end
