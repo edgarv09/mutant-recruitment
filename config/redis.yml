@@ -1,0 +1,14 @@
+default: &default
+  url: redis://localhost:6380
+  db: 0
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  url: <%= ENV.fetch("REDIS_TEST_URL", "redis://tmp_cache_1:6380") %>
+
+production:
+  <<: *default
+  url: <%= ENV['REDISGREEN_URL'] %>
