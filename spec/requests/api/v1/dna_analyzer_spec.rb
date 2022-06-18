@@ -17,7 +17,7 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
 
     describe 'analyze bad request' do
       it 'return forbidden in case of rectangular array' do
-        post "/mutant", :params => { :dna => ["ATG","CAG"] }
+        post "/mutant", :params => { :dna => ["ATG","CAG", "CAG", "TTA"] }
         expect(response).to have_http_status(:forbidden)
       end
 

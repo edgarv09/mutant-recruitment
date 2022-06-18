@@ -2,13 +2,18 @@ class DnaAnalyzer < ApplicationService
   attr_reader :dna_matrix
   MUTANT_SEQUENCE_SIZE = 4
 
-  POOL_SIZE = 4
+  POOL_SIZE = 10
   def initialize(dna)
     @dna_matrix = Dna::Matrix.new(dna)
     @mutan_sequence_counter = 0
   end
 
   def call
+    default_execution
+    self
+  end
+
+  def call_parallel
     parallel_execution
     self
   end
@@ -52,28 +57,39 @@ class DnaAnalyzer < ApplicationService
   def analyze_rows
     @dna_matrix.rows.each do |sequence|
       find_mutant_sequences(sequence)
-       p __method__
+       #p __method__
+      if mutant?
+        break
+      end
     end
   end
 
   def analyze_columns
     @dna_matrix.columns.each do |sequence|
       find_mutant_sequences(sequence)
-       p __method__
+       #p __method__
+       #
+      break if mutant?
     end
   end
 
   def analyze_forward_diagonals
     @dna_matrix.forward_diagonal.each do |sequence|
       find_mutant_sequences(sequence)
-       p __method__
+       #p __method__
+      if mutant?
+        break
+      end
     end
   end
 
   def analyze_backward_diagonals
     @dna_matrix.backward_diagonal.each do |sequence|
       find_mutant_sequences(sequence)
-       p __method__
+       #p __method__
+      if mutant?
+        break
+      end
     end
   end
 
@@ -90,12 +106,12 @@ class DnaAnalyzer < ApplicationService
 
     while more_sequences do
       temp_sequence = sequence.slice(pivot, MUTANT_SEQUENCE_SIZE)
-      p "movimiento start: #{pivot}"
-      p temp_sequence
+      #p "movimiento start: #{pivot}"
+      #p temp_sequence
       break if temp_sequence.size < 4
       if temp_sequence.uniq.size == 1
         mutant_sequence_finded
-        p "sequencia encontrada #{temp_sequence}, counter: #{@mutan_sequence_counter}"
+        #p "sequencia encontrada #{temp_sequence}, counter: #{@mutan_sequence_counter}"
         more_sequences = false
         pivot + 3
       else
