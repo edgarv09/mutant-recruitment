@@ -1,5 +1,5 @@
 module Dna
-  class SequenceAnalyzer
+  class SequenceAnalyzer < ApplicationService
     MUTANT_SEQUENCE_SIZE = 4
     attr_reader :dna_sequences, :mutan_sequence_counter
 
