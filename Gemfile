@@ -29,6 +29,12 @@ gem "rack-attack", "~> 6.6.1" # Used to throttle requests to prevent brute force
 gem "rack-cors", "~> 1.1" # Middleware that will make Rack-based apps CORS compatible
 gem "rack-timeout", "~> 0.6" # Rack middleware which aborts requests that have been running for longer than a specified timeout
 
+gem 'redis', ">= 4.6.0"
+
+# sidekiq
+gem "sidekiq"
+gem 'parallel_workforce'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:ruby, :mri, :mingw, :x64_mingw]
@@ -56,6 +62,7 @@ group :test do
   gem 'database_cleaner'
   gem 'coveralls', require: false
   gem 'simplecov', require: false
+  gem "mock_redis", "~> 0.29.0"
 end
 
 group :development do
