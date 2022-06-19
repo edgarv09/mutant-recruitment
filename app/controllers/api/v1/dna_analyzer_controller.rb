@@ -2,10 +2,13 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   before_action :validate_params, only: [:mutant]
 
   def mutant
-    response = DnaAnalyzer.new(payload_to_array(dna_payload[:dna])).call
+    response = DnaAnalyzer.call(payload_to_array(dna_payload[:dna]))
 
     return head :ok if response.mutant?
     head :forbidden
+  end
+
+  def stats
   end
 
   private
