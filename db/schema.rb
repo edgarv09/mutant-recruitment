@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2022_06_19_081407) do
   create_table "mutant_dnas", force: :cascade do |t|
     t.string "identifier"
     t.jsonb "dna"
-    t.boolean "is_mutant"
+    t.boolean "is_mutant", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["identifier"], name: "index_mutant_dnas_on_identifier"

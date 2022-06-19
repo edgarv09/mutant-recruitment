@@ -4,7 +4,12 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   def mutant
     response = DnaAnalyzer.call(payload_to_array(dna_payload[:dna]))
 
-    return head :ok if response.mutant?
+    if response.mutant?
+      MutantDna.create(dna: dna_payload[:dna], is_mutant: true)
+
+      return head :ok
+    end
+
     head :forbidden
   end
 
