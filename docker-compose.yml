@@ -3,8 +3,11 @@ services:
   redis:
     image: redis:6.0.9-alpine
     container_name: mutant_redis
+    command: --port 6380
     ports:
       - "6380:6380"
+    expose:
+      - "6380"
 
   db:
     image: postgres:13-alpine

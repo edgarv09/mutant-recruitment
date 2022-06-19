@@ -11,4 +11,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['REDISGREEN_URL'] %>
+  url: <%= ENV['REDIS_URL'] %>
