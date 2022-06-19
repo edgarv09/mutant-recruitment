@@ -1,0 +1,2 @@
+class MutantDna < ApplicationRecord
+end
