@@ -1,4 +1,4 @@
-class MutantDna < ApplicationRecord
+class Dna < ApplicationRecord
   extend Forwardable
   def_delegators :MutantDna, :dna_identifier
   validates :dna, presence: true
@@ -9,6 +9,12 @@ class MutantDna < ApplicationRecord
 
   scope :mutant, -> { where(is_mutant: true) }
   scope :human, -> { where(is_mutant: false) }
+
+  enum type: array_to_enum_hash(DnaTypes::TYPES), _suffix: true
+
+  def types
+    @types ||= DnaTypes.new(read_attribute(:types))
+  end
 
   def self.dna_identifier(dna)
     Digest::SHA512.hexdigest(dna.to_s)
