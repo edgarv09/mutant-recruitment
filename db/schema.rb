@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 2022_06_19_081407) do
   enable_extension "plpgsql"
 
   create_table "mutant_dnas", force: :cascade do |t|
-    t.string "identifier"
+    t.string "identifier", null: false
     t.jsonb "dna"
     t.boolean "is_mutant", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["identifier"], name: "index_mutant_dnas_on_identifier"
+    t.index ["identifier"], name: "index_mutant_dnas_on_identifier", unique: true
   end
 
 end

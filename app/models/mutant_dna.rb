@@ -2,12 +2,17 @@ class MutantDna < ApplicationRecord
   extend Forwardable
   def_delegators :MutantDna, :dna_identifier
   validates :dna, presence: true
-  before_create :dna_identifier
+  #validates_uniqueness_of :identifier
+  #validates_with Validator::DnaIdentifier, fields [:identifier]
 
-  scope :find_mutant, ->(dna) { where(identifier: dna_identifier(dna)).take }
+  before_create :dna_identifier
 
   def self.dna_identifier(dna)
     Digest::SHA512.hexdigest(dna.to_s)
+  end
+
+  def self.find_by_dna(dna)
+    where(identifier: dna_identifier(dna)).take
   end
 
   private
