@@ -17,4 +17,11 @@ module ApplicationHelper
   def payload_to_array(payload)
     Array.new(payload.size) { |index| payload[index].chars } # rows
   end
+
+  def ratio_mutant(human:, mutant:)
+    return mutant if human.zero?
+
+    result = (mutant/human.to_f)
+    result.infinite? ? 0 : result
+  end
 end

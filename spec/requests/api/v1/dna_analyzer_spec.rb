@@ -47,4 +47,20 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
       end
     end
   end
+
+  context "Stats end-point" do
+    describe 'get stats' do
+      it 'when there is no mutant/human analyzed' do
+        get "/stats"
+        expect(response.body).to eq("{\"count_mutant_dna\":0,\"count_human_dna\":0,\"ratio\":0}")
+      end
+
+      it 'and return mutant ratio equals to zero' do
+        create(:mutant_dna, :mutant)
+        get "/stats"
+        body = JSON.parse(response.body)
+        expect(body["ratio"]).to eq(1)
+      end
+    end
+  end
 end
