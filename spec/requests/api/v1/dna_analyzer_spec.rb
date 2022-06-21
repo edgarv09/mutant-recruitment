@@ -25,6 +25,16 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
         post "/mutant", :params => { :dna => ["ATG","CAGV"] }
         expect(response).to have_http_status(:bad_request)
       end
+
+      it 'dna payload is all empty strings' do
+        post "/mutant", :params => { :dna => ["",""] }
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'dna payload contains numbers' do
+        post "/mutant", :params => { :dna => [1, 1, "", "", 1, 1] }
+        expect(response).to have_http_status(:bad_request)
+      end
     end
 
     describe 'previously tested DNA' do
