@@ -15,7 +15,10 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   end
 
   def stats
-    render json: {"count_mutant_dna":40, "count_human_dna":100, "ratio":0.4}, status: :ok
+    human_dna = MutantDna.human.count
+    mutant_dna = MutantDna.mutant.count
+
+    render json: {"count_mutant_dna": mutant_dna, "count_human_dna": human_dna, "ratio": (mutant_dna/human_dna.to_f).round(2)}, status: :ok
   end
 
   private

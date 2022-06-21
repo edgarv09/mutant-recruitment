@@ -7,6 +7,9 @@ class MutantDna < ApplicationRecord
 
   before_create :dna_identifier
 
+  scope :mutant, -> { where(is_mutant: false) }
+  scope :human, -> { where(is_mutant: true) }
+
   def self.dna_identifier(dna)
     Digest::SHA512.hexdigest(dna.to_s)
   end

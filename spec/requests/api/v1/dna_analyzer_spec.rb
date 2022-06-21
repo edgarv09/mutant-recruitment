@@ -15,23 +15,23 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
       end
     end
 
-    describe 'analyze bad request' do
-      it 'return bad_request in case of rectangular array' do
+    describe 'analyze a not valid payload' do
+      it 'and return bad_request in case of rectangular array' do
         post "/mutant", :params => { :dna => ["ATG","CAG", "CAG", "TTA"] }
         expect(response).to have_http_status(:bad_request)
       end
 
-      it 'return bad_request in case of invalid_dna' do
+      it 'and return bad_request in case of invalid_dna' do
         post "/mutant", :params => { :dna => ["ATG","CAGV"] }
         expect(response).to have_http_status(:bad_request)
       end
 
-      it 'dna payload is all empty strings' do
+      it 'if entire array are empty strings' do
         post "/mutant", :params => { :dna => ["",""] }
         expect(response).to have_http_status(:bad_request)
       end
 
-      it 'dna payload contains numbers' do
+      it 'that contains numbers' do
         post "/mutant", :params => { :dna => [1, 1, "", "", 1, 1] }
         expect(response).to have_http_status(:bad_request)
       end
