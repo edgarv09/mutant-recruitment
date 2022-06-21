@@ -15,11 +15,6 @@ class DnaAnalyzer < ApplicationService
     self
   end
 
-  def call_parallel
-    parallel_execution_2
-    self
-  end
-
   def mutant?
     @mutan_sequence_counter > 2
   end
@@ -30,46 +25,5 @@ class DnaAnalyzer < ApplicationService
       analyzer = Dna::SequenceAnalyzer.call(dna_matrix.send(task))
       @mutan_sequence_counter+= analyzer.mutan_sequence_counter
     end
-  end
-
-  def parallel_execution_2
-    jobs = Queue.new
-    task =  %i(rows columns forward_diagonal backward_diagonal)
-    task.each {|i| jobs.push i}
-
-    workers = (POOL_SIZE).times.map do
-      Thread.new do
-        begin
-          while method = jobs.pop(true)
-            #self.send("analyze_#{method}")
-            p method
-            analyzer = Dna::SequenceAnalyzer.call(dna_matrix.send(method))
-            @mutan_sequence_counter += analyzer.mutan_sequence_counter
-          end
-        rescue ThreadError => e
-
-        end
-      end
-    end
-    workers.map(&:join)
-  end
-
-  def parallel_execution
-    jobs = Queue.new
-    task =  %i(rows columns forward_diagonals backward_diagonals)
-    task.each {|i| jobs.push i}
-
-    workers = (POOL_SIZE).times.map do
-      Thread.new do
-        begin
-          while method = jobs.pop(true)
-            self.send("analyze_#{method}")
-          end
-        rescue ThreadError => e
-
-        end
-      end
-    end
-    workers.map(&:join)
   end
 end

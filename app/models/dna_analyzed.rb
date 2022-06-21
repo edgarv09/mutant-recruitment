@@ -1,5 +1,6 @@
-class MutantDna < ApplicationRecord
+class DnaAnalyzed < ApplicationRecord
   extend Forwardable
+
   def_delegators :MutantDna, :dna_identifier
   validates :dna, presence: true
   #validates_uniqueness_of :identifier
@@ -7,8 +8,7 @@ class MutantDna < ApplicationRecord
 
   before_create :dna_identifier
 
-  scope :mutant, -> { where(is_mutant: true) }
-  scope :human, -> { where(is_mutant: false) }
+  enum order: {human: 0, mutant: 1 },  _suffix: true
 
   def self.dna_identifier(dna)
     Digest::SHA512.hexdigest(dna.to_s)

@@ -2,12 +2,12 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   before_action :validate_params, only: [:mutant]
 
   def mutant
-    mutant_dna = MutantDna.find_by_dna(dna_payload[:dna])
+    mutant_dna = DnaAnalyzed.find_by_dna(dna_payload[:dna])
     response = if mutant_dna.present?
-      mutant_response(mutant_dna.is_mutant)
+      mutant_response(mutant_dna.mutant_order?)
     else
       dna_analisis = DnaAnalyzer.call(dna_payload[:dna])
-      MutantDna.create!(dna: dna_analisis.dna, is_mutant: dna_analisis.mutant?)
+      DnaAnalyzed.create!(dna: dna_analisis.dna, order: dna_analisis.mutant? ? :mutant : :human)
       mutant_response(dna_analisis.mutant?)
     end
 
@@ -15,8 +15,8 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   end
 
   def stats
-    human_dna = MutantDna.human.count
-    mutant_dna = MutantDna.mutant.count
+    human_dna = DnaAnalyzed.human_order.count
+    mutant_dna = DnaAnalyzed.mutant_order.count
 
     render json: {"count_mutant_dna": mutant_dna, "count_human_dna": human_dna, "ratio": ratio_mutant(mutant: mutant_dna, human: human_dna).round(2)}, status: :ok
   end
