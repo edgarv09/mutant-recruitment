@@ -2,15 +2,13 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   before_action :validate_params, only: [:mutant]
 
   def mutant
-
-    mutant_dna = MutantDna.find_mutant(dna_payload[:dna])
-    response = if mutant_dna.present? && mutant_dna.is_mutant
-      head (mutant_dna.is_mutant ? :ok : :forbidden)
+    mutant_dna = MutantDna.find_by_dna(dna_payload[:dna])
+    response = if mutant_dna.present?
+      mutant_response(mutant_dna.is_mutant)
     else
-      dna_analisis = DnaAnalyzer.call(payload_to_array(dna_payload[:dna]))
-      MutantDna.create(dna: dna_payload[:dna], is_mutant: dna_analisis.mutant?)
-
-      head (dna_analisis.mutant? ? :ok : :forbidden)
+      dna_analisis = DnaAnalyzer.call(dna_payload[:dna])
+      MutantDna.create!(dna: dna_analisis.dna, is_mutant: dna_analisis.mutant?)
+      mutant_response(dna_analisis.mutant?)
     end
 
     return response
@@ -23,8 +21,7 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   private
 
   def mutant_response(is_mutant)
-    head (dna_analisis.mutant? ? :ok : :forbidden)
-
+    head (is_mutant ? :ok : :forbidden)
   end
 
   def dna_payload
@@ -32,6 +29,6 @@ class Api::V1::DnaAnalyzerController < ApplicationController
   end
 
   def validate_params
-    return head :forbidden unless valid_dna?(dna_payload[:dna])
+    return head :bad_request unless valid_dna?(dna_payload[:dna])
   end
 end

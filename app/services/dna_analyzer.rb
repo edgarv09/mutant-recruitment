@@ -1,10 +1,12 @@
 class DnaAnalyzer < ApplicationService
-  attr_reader :dna_matrix
+  include ApplicationHelper
+  attr_reader :dna_matrix, :dna
   MUTANT_SEQUENCE_SIZE = 4
 
   POOL_SIZE = 10
   def initialize(dna)
-    @dna_matrix = Dna::Matrix.new(dna)
+    @dna = dna
+    @dna_matrix = Dna::Matrix.new(payload_to_array(@dna))
     @mutan_sequence_counter = 0
   end
 
