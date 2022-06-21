@@ -38,10 +38,10 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
     end
 
     describe 'previously tested DNA' do
-      let!(:mutant_dna) { create(:mutant_dna, :mutant) }
+      let!(:dna_analyzed) { create(:dna_analyzed, :mutant) }
 
       it 'mutant dna' do
-        post "/mutant", :params => { :dna => mutant_dna.dna }
+        post "/mutant", :params => { :dna => dna_analyzed.dna }
 
         expect(response).to have_http_status(:ok)
       end
@@ -55,8 +55,8 @@ RSpec.describe "Api::V1::DnaAnalyzer", type: :request do
         expect(response.body).to eq("{\"count_mutant_dna\":0,\"count_human_dna\":0,\"ratio\":0}")
       end
 
-      it 'and return mutant ratio equals to zero' do
-        create(:mutant_dna, :mutant)
+      it 'mutant ratio equals to 1 in case only one mutant were analyzed' do
+        create(:dna_analyzed, :mutant)
         get "/stats"
         body = JSON.parse(response.body)
         expect(body["ratio"]).to eq(1)

@@ -10,12 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_21_063736) do
+ActiveRecord::Schema.define(version: 2022_06_19_081407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-# Could not dump table "dnas" because of following StandardError
-#   Unknown type 'dna_types' for column 'type'
+  create_table "dna_analyzeds", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.jsonb "dna"
+    t.integer "order", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identifier"], name: "index_dna_analyzeds_on_identifier", unique: true
+  end
 
 end
