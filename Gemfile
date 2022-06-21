@@ -35,6 +35,9 @@ gem 'redis', ">= 4.6.0"
 gem "sidekiq"
 gem 'parallel_workforce'
 
+# Monitoring performance and errors
+gem 'rollbar'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:ruby, :mri, :mingw, :x64_mingw]
