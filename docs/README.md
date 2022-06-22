@@ -1,4 +1,3 @@
-# Introducción
 <div align="center">
   <br>
   <h1>Mutant Finder ☣️</h1>

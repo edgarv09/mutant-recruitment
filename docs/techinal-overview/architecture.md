@@ -1,6 +1,4 @@
-# Arquitectura
-
-## Problema
+# Problema
 
 Para determinar si un humano es mutante, se necesita encontrar más de una secuencia de cuatro letras iguales, en una cadena de ADN.
 (i.e.  ADN: `{"ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"}`)
@@ -43,15 +41,20 @@ B(slice) -- TTTT--> C(Unique)
 C(Unique) --> D(Mutant Counter)
 D(Mutant Counter) --> E(More sequences)
 E{More sequences} --> |Yes| B(slice)
-E{More sequences} --> F[Retornar]s
+E{More sequences} --> F[Retornar]
 ```
+# Arquitectura
+
+Aplicacion en Ruby on Rails
+
+## Modulos y clases usadas
 
 A nivel tecnico vamos a tener las siguientes clases para lograr analizar un ADN de forma correcta
 - `Dna::Matrix`
 - `Dna::SequenceAnalyzer`
 - `DnaAnalyzer`
 
-### `Dna::Matrix`
+### Class Dna::Matrix
 Nuestra abstraccion del objeto matriz que nos permite obtener diagonales, columnas y filas de nuestra cadena de ADN inicial.
 
 ejemplo:
@@ -64,7 +67,7 @@ dna_matrix.backward_diagonal
 => [["T"], ["C", "C"], ["A", "C", "A"], ["T", "G", "C", "C"], ["C", "T", "A", "C", "T"], ["A", "A", "A", "A", "T", "G"], ["T", "G", "T", "G", "A"], ["G", "T", "G", "G"], ["C", "G", "T"], ["G", "C"], ["A"]]
 ```
 
-### `Dna::SequenceAnalyzer`
+### Class `Dna::SequenceAnalyzer`
 Contiene la logica para procesar una lista de secuencias y determinar cuantas de ellas son mutantes o no
 
 ejemplo:
@@ -75,8 +78,8 @@ sequence_analysis.mutan_sequence_counter
 => 0
 ```
 
-### `DnaAnalyzer`
-Encapsula todos los procesos necesarios para determinar si una matriz NxN es humana o mutante.
+### Class `DnaAnalyzer`
+Encapsula todos los procesos necesarios para determinar si una matriz NxN es humana o mutante. hace uso de `Dna::Matrix` y `Dna::SequenceAnalyzer`
 
 ejemplo:
 ```ruby
@@ -86,3 +89,10 @@ analyzer.mutant?
 => true
 ```
 
+## End points
+
+### /mutant
+Recibe un arreglo de strings que representa una cadena de ADN y response codigos de status si el adn analizado es mutanto o humano
+
+### /stats
+Permite obtener las estadisticas de los analisis realizados
