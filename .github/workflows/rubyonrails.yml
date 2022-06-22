@@ -82,7 +82,7 @@ jobs:
       - name: Code Coverage Summary
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
-          filename: coverage.xml
+          filename: .coverage/coverage.xml
           badge: true
           hide_branch_rate: true
           hide_complexity: true
