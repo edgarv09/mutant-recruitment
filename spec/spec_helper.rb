@@ -1,4 +1,11 @@
 require 'simplecov'
+require 'simplecov-cobertura'
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::SimpleFormatter,
+  SimpleCov::Formatter::CoberturaFormatter,
+  SimpleCov::Formatter::HTMLFormatter
+])
+
 SimpleCov.start 'rails' do
   add_group 'Services', 'app/services'
   add_filter 'spec/rails_helper.rb'

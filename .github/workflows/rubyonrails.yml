@@ -82,8 +82,10 @@ jobs:
       - name: Code Coverage Summary
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
-          filename: coverage-report
+          filename: coverage.xml
           badge: true
+          hide_branch_rate: true
+          hide_complexity: true
 
   lint:
     runs-on: ubuntu-latest

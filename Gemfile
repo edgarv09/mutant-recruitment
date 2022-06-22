@@ -65,6 +65,7 @@ group :test do
   gem 'database_cleaner'
   gem 'coveralls', require: false
   gem 'simplecov', require: false
+  gem 'simplecov-cobertura'
   gem "mock_redis", "~> 0.29.0"
 end
 
