@@ -89,10 +89,28 @@ analyzer.mutant?
 => true
 ```
 
+### Model `DnaAnalyzed`
+Este modelo nos permite almacenar en base de datos un registro de cada una de los ADN analizados y conocer de que orden son (humano, mutante)
+
+```mermaid
+erDiagram
+    DnaAnalyzeds {
+        string identifier
+        array dna
+        integer order
+    }
+```
+
+- identifier: corresponde al hash(sha512) del DNA analizado y nos permite encontrar un identificador unico de la cadena de ADN
+- dna: DNA enviado por el usuario.
+- order: enum que nos permite identificar si es humano o mutante.
+
+
 ## End points
 
 ### /mutant
-Recibe un arreglo de strings que representa una cadena de ADN y response codigos de status si el adn analizado es mutanto o humano
+Recibe un arreglo de strings que representa una cadena de ADN y response codigos de status si el adn analizado es mutanto o humano.
+- si el ADN ya fue previamente analizado, se entregara el resultado previamente calculado.
 
 ### /stats
 Permite obtener las estadisticas de los analisis realizados
