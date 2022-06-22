@@ -87,7 +87,6 @@ jobs:
           hide_branch_rate: true
           hide_complexity: true
           format: markdown
-          hide_branch_rate: true
           hide_complexity: true
           indicators: true
           output: both
